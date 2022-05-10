@@ -10,6 +10,6 @@ interface NewsInterface {
     @GET("top-headlines")
     fun getNews(
         @Query("apiKey") apiKey:String,
-        @Query("county") county:String
+        @Query("country") country:String
     ):Call<News>
 }
