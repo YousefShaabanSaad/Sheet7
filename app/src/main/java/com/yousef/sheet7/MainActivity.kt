@@ -21,19 +21,16 @@ class MainActivity : AppCompatActivity() {
         val getData=NewsService.getInstance().create(NewsInterface::class.java)
         getData.getNews("aeeb84e1ce46464aaf5f6655f5cae56a","eg")
             .enqueue(object : Callback<News?> {
-            override fun onResponse(call: Call<News?>, response: Response<News?>) {
-                val responseBody=response.body()!!
-                if(response.code() ==200){
-                    val newsAdapter=NewsAdapter(applicationContext, responseBody.articles)
+                override fun onResponse(call: Call<News?>, response: Response<News?>) {
+                    val newsAdapter=NewsAdapter(applicationContext, response.body()!!.articles)
                     val newsRecyclerView=findViewById<RecyclerView>(R.id.newsRecyclerView)
                     newsRecyclerView.layoutManager= LinearLayoutManager(applicationContext)
                     newsRecyclerView.adapter = newsAdapter
                 }
-            }
 
-            override fun onFailure(call: Call<News?>, t: Throwable) {
-                Toast.makeText(applicationContext, t.message,Toast.LENGTH_LONG).show()
-            }
-        })
+                override fun onFailure(call: Call<News?>, t: Throwable) {
+                    Toast.makeText(applicationContext, t.message,Toast.LENGTH_LONG).show()
+                }
+            })
     }
 }
